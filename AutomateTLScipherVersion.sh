@@ -68,22 +68,24 @@ if [ -n "$outputfile" ]; then
     > "$outputfile"
 fi
 
-output "| Machine | Port | SSLv2 | SSLv3 | TLS 1.0 | TLS 1.1 |"
-output "| --- | --- | :-: | :-: | :-: | :-: |"
+output "| Machine | Port | SSLv2 | SSLv3 | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |"
+output "| ------ | --- | :-: | :-: | :-: | :-: | :-: | :-: |"
 
 while IFS= read -r ligne
 do
-    resultat=$(/opt/tools/testssl.sh/testssl.sh --color 0 "$ligne" 2>&1 | tee /dev/tty)
-    
+    resultat=$(/opt/tools/testssl.sh/testssl.sh -p --color 0 "$ligne" 2>&1 | tee /dev/tty)
+
     machine="$ligne"
     port=$(echo "$ligne" | grep -oP ':\K\d+$' || echo "443")
-    
+
     sslv2=$(echo "$resultat" | grep -q "SSLv2.*not offered" && echo "❌" || echo "✅")
     sslv3=$(echo "$resultat" | grep -q "SSLv3.*not offered" && echo "❌" || echo "✅")
     tls1=$(echo "$resultat" | grep -q "TLS 1.0.*not offered" && echo "❌" || echo "✅")
     tls11=$(echo "$resultat" | grep -q "TLS 1.1.*not offered" && echo "❌" || echo "✅")
+    tls12=$(echo "$resultat" | grep -q "TLS 1.2.*not offered" && echo "❌" || echo "✅")
+    tls13=$(echo "$resultat" | grep -q "TLS 1.3.*not offered" && echo "❌" || echo "✅")
 
-    output "| $machine | $port | $sslv2 | $sslv3 | $tls1 | $tls11 |"
+    output "| $machine | $port | $sslv2 | $sslv3 | $tls1 | $tls11 | $tls12 | $tls13 |"
     
 done < "$inputfile"
 
