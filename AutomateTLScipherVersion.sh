@@ -80,7 +80,6 @@ if [ -n "$outputfile" ]; then
     > "$outputfile"
 fi
 
-<<<<<<< HEAD
 if [ -n "$outputfile1" ]; then
     sortie_dir=$(dirname "$outputfile1")
     if [ ! -d "$sortie_dir" ]; then
@@ -93,8 +92,6 @@ if [ -n "$outputfile1" ]; then
     > "$outputfile1"
 fi
 
-=======
->>>>>>> 84c1dbb (Update AutomateTLScipherVersion.sh)
 output "| Machine | Port | SSLv2 | SSLv3 | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |"
 output "| ------ | --- | :-: | :-: | :-: | :-: | :-: | :-: |"
 
@@ -111,16 +108,10 @@ do
     tls11=$(echo "$resultat" | grep -q "TLS 1.1.*not offered" && echo "❌" || echo "✅")
     tls12=$(echo "$resultat" | grep -q "TLS 1.2.*not offered" && echo "❌" || echo "✅")
     tls13=$(echo "$resultat" | grep -q "TLS 1.3.*not offered" && echo "❌" || echo "✅")
-<<<<<<< HEAD
 
     output "| $machine | $port | $sslv2 | $sslv3 | $tls1 | $tls11 | $tls12 | $tls13 |"
 
 
-=======
-
-    output "| $machine | $port | $sslv2 | $sslv3 | $tls1 | $tls11 | $tls12 | $tls13 |"
-    
->>>>>>> 84c1dbb (Update AutomateTLScipherVersion.sh)
 done < "$inputfile"
 
 output "| Machine        | Port  |      LUCKY13      |      SWEET32      |     POODLE     | BEAST |"
