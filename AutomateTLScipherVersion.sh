@@ -61,13 +61,6 @@ output() {
     echo "$1"
 }
 
-outputcypher() {
-    if [ -n "$outputfile1" ]; then
-        echo "$1" >> "$outputfile1"
-    fi
-    echo "$1"
-}
-
 if [ -n "$outputfile" ]; then
     sortie_dir=$(dirname "$outputfile")
     if [ ! -d "$sortie_dir" ]; then
@@ -124,10 +117,10 @@ do
     machine="$ligne"
     port=$(echo "$ligne" | grep -oP ':\K\d+$' || echo "443")
 
-    LUCKY13=$(echo "$resultat" | grep -q "LUCKY13.* VULNERABLE" && echo "❌" || echo "✅")
-    SWEET32=$(echo "$resultat" | grep -q "SWEET32.* VULNERABLE" && echo "❌" || echo "✅")
-    POODLE=$(echo "$resultat" | grep -q "POODLE,.* VULNERABLE" && echo "❌" || echo "✅")
-    BEAST=$(echo "$resultat" | grep -q "BEAST.* VULNERABLE" && echo "❌" || echo "✅")
+    LUCKY13=$(echo "$resultat" | grep -q "not vulnerable" && echo "✅" || echo "❌")
+    SWEET32=$(echo "$resultat" | grep -q "not vulnerable" && echo "✅" || echo "❌")
+    POODLE=$(echo "$resultat" | grep -q "not vulnerable" && echo "✅" || echo "❌")
+    BEAST=$(echo "$resultat" | grep -q "not vulnerable" && echo "✅" || echo "❌")
 
     output "| $machine | $port | $LUCKY13 | $SWEET32 | $POODLE | $BEAST |"
 
